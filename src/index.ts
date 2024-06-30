@@ -2,7 +2,6 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import sequelize from './config/database';
 import identityRoutes from './routes/identify';
-
 dotenv.config();
 
 const app: Express = express();

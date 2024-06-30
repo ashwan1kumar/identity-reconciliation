@@ -1,8 +1,13 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
 
-@Table
+@Table({
+    timestamps: true,
+    paranoid: true
+})
 export class UserData extends Model<UserData> {
 
+    @PrimaryKey
+    @AutoIncrement
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
@@ -11,19 +16,19 @@ export class UserData extends Model<UserData> {
 
     @Column({
         type: DataType.STRING,
-        allowNull: false,
+        allowNull: true,
     })
     phoneNumber?: string;
 
     @Column({
         type: DataType.STRING,
-        allowNull: false,
+        allowNull: true,
     })
     email?: string;
 
     @Column({
         type: DataType.STRING,
-        allowNull: false,
+        allowNull: true,
     })
     linkedId?: string;
 
@@ -36,18 +41,20 @@ export class UserData extends Model<UserData> {
     @Column({
         type: DataType.DATE,
         allowNull: false,
+        defaultValue: DataType.NOW,
     })
-    createdAt!: string;
+    createdAt!: Date;
 
     @Column({
         type: DataType.DATE,
         allowNull: false,
+        defaultValue: DataType.NOW,
     })
-    updatedAt!: string;
+    updatedAt!: Date;
 
     @Column({
         type: DataType.DATE,
-        allowNull: false,
+        allowNull: true,
     })
-    deletedAt?: string;
+    deletedAt?: Date;
 }

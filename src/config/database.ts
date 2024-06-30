@@ -1,12 +1,15 @@
 // src/config/database.js
-const { Sequelize } = require('sequelize');
+import {Sequelize} from 'sequelize-typescript';
+import { UserData } from '../models/userData.model';
 require('dotenv').config()
 console.log(process.env.PORT)
-const sequelize = new Sequelize(process.env.DB_URI, {
+const sequelize = new Sequelize({
   dialect: "postgres",
   port: 5432,
+  host: process.env.DB_HOST,
   password: process.env.DB_PASS,
-  user: process.env.DB_USER,
+  username: process.env.DB_USER,
+  database: process.env.DB_NAME,
   dialectOptions: {
     ssl: {
       require: true,
@@ -14,6 +17,9 @@ const sequelize = new Sequelize(process.env.DB_URI, {
     }
   }
 });
-
+sequelize.addModels([UserData]);
+sequelize.databaseVersion().then((databaseVersion: string) => {
+  console.log(databaseVersion);
+} );
 export default sequelize;
 
